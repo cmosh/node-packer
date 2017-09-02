@@ -420,7 +420,7 @@ class Compiler
 
   def compile_linux
     @utils.chdir(@tmpdir_node) do
-      @utils.run("./configure #{@options[:debug] ? '--debug' : ''}")
+      @utils.run("./configure #{@options[:debug] ? '--debug --fully-static --without-npm' : '--fully-static --without-npm'}")
       @utils.run("make #{@options[:make_args]}")
     end
     src = File.join(@tmpdir_node, "out/#{@options[:debug] ? 'Debug' : 'Release'}/node")
