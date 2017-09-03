@@ -390,7 +390,7 @@ class Compiler
 
   def compile_win
     @utils.chdir(@tmpdir_node) do
-      @utils.run("call vcbuild.bat #{@options[:debug] ? 'debug' : ''} #{@options[:vcbuild_args]}")
+      @utils.run("call vcbuild.bat #{@options[:debug] ? 'debug' : ''} #{@options[:vcbuild_args]} #{@options[:static] ? '--enable-static' : ''}")
     end
     src = File.join(@tmpdir_node, (@options[:debug] ? 'Debug\\node.exe' : 'Release\\node.exe'))
     @utils.cp(src, @options[:output])
@@ -398,7 +398,7 @@ class Compiler
 
   def compile_mac
     @utils.chdir(@tmpdir_node) do
-      @utils.run("./configure #{@options[:debug] ? '--debug --xcode' : ''}")
+      @utils.run("./configure #{@options[:debug] ? '--debug --xcode' : ''} #{@options[:static] ? '--fully-static --without-npm' : ''}")
       @utils.run("make #{@options[:make_args]}")
     end
     if @options[:pkg]
@@ -420,7 +420,7 @@ class Compiler
 
   def compile_linux
     @utils.chdir(@tmpdir_node) do
-      @utils.run("./configure #{@options[:debug] ? '--debug --fully-static --without-npm' : '--fully-static --without-npm'}")
+      @utils.run("./configure #{@options[:debug] ? '--debug' : ''} #{@options[:static] ? '--fully-static --without-npm' : ''}")
       @utils.run("make #{@options[:make_args]}")
     end
     src = File.join(@tmpdir_node, "out/#{@options[:debug] ? 'Debug' : 'Release'}/node")

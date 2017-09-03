@@ -130,6 +130,10 @@ OptionParser.new do |opts|
     options[:quiet] = true
   end
 
+  opts.on("--static", "Build fully static binary") do
+    options[:static] = true
+  end
+
   opts.on("-v", "--version", "Prints the version of nodec and exit") do
     puts ::Compiler::VERSION
     exit 0
